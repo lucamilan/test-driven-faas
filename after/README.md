@@ -61,3 +61,14 @@ dynamodb.scan(params, function(err, data) {
 });
 ```
 
+## Docker
+
+```bat
+docker build -t serverless .
+docker run -p 49160:8080 -d serverless
+docker images
+docker ps -a
+docker rm $(docker ps -aq) 
+```
+
+
