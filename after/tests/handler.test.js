@@ -31,8 +31,7 @@ describe('graphql', () => {
 
   it('missing key', done => {
     const expected = ''
-    stubDocumentClient({
-    })
+    stubDocumentClient({ })
     const evt = {
       queryStringParameters: {
         query: '{getKey(key:"Username")}'
@@ -40,6 +39,20 @@ describe('graphql', () => {
     }
     handler.graphql(evt, null, (error, result) => {
       assert.equal(expected, JSON.parse(result.body).data.getKey)
+      done()
+    })
+  })
+
+  it('wrong format query', done => {
+    const expected = ''
+    stubDocumentClient({ })
+    const evt = {
+      queryStringParameters: {
+        query: '{getKeykeyUsername")}'
+      }
+    }
+    handler.graphql(evt, null, (error, result) => {
+      assert.equal(1, JSON.parse(result.body).errors.length)
       done()
     })
   })
