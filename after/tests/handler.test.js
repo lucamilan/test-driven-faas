@@ -1,7 +1,7 @@
 const assert = require('assert')
-const handler = require('../handler')
 const AWS = require('aws-sdk-mock')
- 
+const handler = require('../src/handler')
+
 const stubDocumentClient = result => {
   AWS.mock('DynamoDB.DocumentClient', 'get', (params, callback) => {
     callback(null, result)
