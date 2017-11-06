@@ -1,19 +1,9 @@
 'use strict'
-const AWS = require('aws-sdk')
-let options = {}
-
-// connect to local DB if running offline
-if (process.env.IS_OFFLINE) {
-  options = {
-    region: 'localhost',
-    endpoint: 'http://localhost:8000'
-  }
-}
-
 const { graphql } = require('graphql')
+const db = require('./db')
 
 module.exports.graphql = (event, context, callback) => {
-  const schema = require('./schema')(new AWS.DynamoDB.DocumentClient(options))
+  const schema = require('./schema')(db())
   graphql(schema, event.queryStringParameters.query)
     .then(result => callback(null, {
     statusCode: 200,
