@@ -5,4 +5,42 @@ const options = process.env.IS_OFFLINE ? {
   endpoint: 'http://localhost:8000'
 } : {}
 
-module.exports = () => new AWS.DynamoDB.DocumentClient(options)
+const db = () => new AWS.DynamoDB.DocumentClient(options)
+
+module.exports = {
+  getKeyValue: key => {
+    const params = {
+      TableName: process.env.DB_TABLE,
+      Key: { key }
+    }
+
+    return new Promise((resolve, reject) => {
+      db().get(params, (error, data) => {
+        if (error) {
+          reject(error)
+        } else {
+          resolve(typeof data.Item === 'undefined' ? '' : data.Item.info)
+        }
+      })
+    })
+  },
+  setKeyValue: (key, info) => {
+    const params = {
+      TableName: process.env.DB_TABLE,
+      Key: { key: key },
+      UpdateExpression: 'SET info = :info',
+      ExpressionAttributeValues: {
+        ':info': info
+      }
+    }
+    return new Promise((resolve, reject) => {
+      db().update(params, (error, data) => {
+        if (error) {
+          reject(error)
+        } else {
+          resolve(info)
+        }
+      })
+    })
+  }
+}
