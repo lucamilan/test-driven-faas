@@ -29,6 +29,21 @@ describe('graphql', () => {
     })
   })
 
+  it('missing key', done => {
+    const expected = ''
+    stubDocumentClient({
+    })
+    const evt = {
+      queryStringParameters: {
+        query: '{getKey(key:"Username")}'
+      }
+    }
+    handler.graphql(evt, null, (error, result) => {
+      assert.equal(expected, JSON.parse(result.body).data.getKey)
+      done()
+    })
+  })
+
   afterEach(() => {
     AWS.restore('DynamoDB.DocumentClient')
   })
