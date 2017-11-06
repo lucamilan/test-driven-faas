@@ -10,11 +10,13 @@ if (process.env.IS_OFFLINE) {
   }
 }
 
-const schema = require('./schema')(new AWS.DynamoDB.DocumentClient(options))
 const { graphql } = require('graphql')
 
-module.exports.graphql = (event, context, callback) => graphql(schema, event.queryStringParameters.query)
-  .then(result => callback(null, {
+module.exports.graphql = (event, context, callback) => {
+  const schema = require('./schema')(new AWS.DynamoDB.DocumentClient(options))
+  graphql(schema, event.queryStringParameters.query)
+    .then(result => callback(null, {
     statusCode: 200,
     body: JSON.stringify(result)
-  }), err => callback(err))
+  }), error => callback(error))
+}

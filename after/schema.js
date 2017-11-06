@@ -10,7 +10,16 @@ const getKeyValue = db => key => {
     TableName: process.env.DB_TABLE,
     Key: { key }
   }
-  return db.get(params).promise().then(result => !result.Item ? '' : result.Item.info)
+
+  return new Promise((resolve, reject) => {
+    db.get(params, (error, data) => {
+      if (error) {
+        reject(error)
+      } else {
+        resolve(typeof data.Item === 'undefined' ? '' : data.Item.info)
+      }
+    })
+  })
 }
 
 const setKeyValue = db => (key, info) => {
