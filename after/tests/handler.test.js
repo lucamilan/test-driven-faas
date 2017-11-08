@@ -1,6 +1,7 @@
 const assert = require('assert')
 const AWS = require('aws-sdk-mock')
 const handler = require('../src/handler')
+const db = require('../src/db')
 
 const stubDocumentClient = result => {
   AWS.mock('DynamoDB.DocumentClient', 'get', (params, callback) => {
@@ -20,11 +21,11 @@ describe('graphql', () => {
     })
     const evt = {
       queryStringParameters: {
-        query: '{getKey(key:"Username")}'
+        query: '{value(key:"Username")}'
       }
     }
     handler.graphql(evt, null, (error, result) => {
-      assert.equal(expected, JSON.parse(result.body).data.getKey)
+      assert.equal(expected, JSON.parse(result.body).data.value)
       done()
     })
   })
@@ -34,11 +35,11 @@ describe('graphql', () => {
     stubDocumentClient({ })
     const evt = {
       queryStringParameters: {
-        query: '{getKey(key:"Username")}'
+        query: '{value(key:"Username")}'
       }
     }
     handler.graphql(evt, null, (error, result) => {
-      assert.equal(expected, JSON.parse(result.body).data.getKey)
+      assert.equal(expected, JSON.parse(result.body).data.value)
       done()
     })
   })
@@ -48,7 +49,7 @@ describe('graphql', () => {
     stubDocumentClient({ })
     const evt = {
       queryStringParameters: {
-        query: '{getKeykeyUsername")}'
+        query: '{valuekeyUsername")}'
       }
     }
     handler.graphql(evt, null, (error, result) => {

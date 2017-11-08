@@ -28,7 +28,7 @@ provider:
 
 functions:
   graphql:
-    handler: src\handler.graphql
+    handler: src/handler.graphql
     environment:
       DB_TABLE: ${self:custom.dbTable}
     events:

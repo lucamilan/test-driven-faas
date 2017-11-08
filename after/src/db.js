@@ -3,12 +3,12 @@ const AWS = require('aws-sdk')
 const options = process.env.IS_OFFLINE ? {
   region: 'localhost',
   endpoint: 'http://localhost:8000'
-} : {}
+} : { }
 
 const db = () => new AWS.DynamoDB.DocumentClient(options)
 
 module.exports = {
-  getKeyValue: key => {
+  getValue: key => {
     const params = {
       TableName: process.env.DB_TABLE,
       Key: { key }
@@ -24,7 +24,7 @@ module.exports = {
       })
     })
   },
-  setKeyValue: (key, info) => {
+  setValue: (key, info) => {
     const params = {
       TableName: process.env.DB_TABLE,
       Key: { key: key },
@@ -33,6 +33,7 @@ module.exports = {
         ':info': info
       }
     }
+
     return new Promise((resolve, reject) => {
       db().update(params, (error, data) => {
         if (error) {

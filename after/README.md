@@ -14,9 +14,9 @@ serverless dynamodb migrate
 # Test
 
 ```bat
-curl -G 'http://localhost:3000/graphql' --data-urlencode 'query={getKey(key:"Username")}'
+curl -G 'http://localhost:3000/graphql' --data-urlencode 'query={value(key:"Username")}'
 
-curl -G 'http://localhost:3000/graphql' --data-urlencode 'query=mutation {setKey(key:"Username", value: "Luca")}'
+curl -G 'http://localhost:3000/graphql' --data-urlencode 'query=mutation {value(key:"Username", value: "Luca")}'
 ```
 
 ```bat
