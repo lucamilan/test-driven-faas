@@ -2,6 +2,8 @@ service: graphql-vault
 
 custom:
   dbTable: ${self:service}-${self:provider.stage}
+  output:
+    file: stack-output.json
   dynamodb:
     start:
       port: 8000
@@ -11,6 +13,7 @@ custom:
 plugins:
   - serverless-dynamodb-local
   - serverless-offline
+  - serverless-stack-output
 
 provider:
   name: aws
@@ -37,7 +40,12 @@ functions:
           method: GET
 
 resources:
-  Resources: 
+  Outputs:
+    DbTableName:
+      Description: "Db Table Name"
+      Value:
+        Ref: DbTable
+  Resources:
     DbTable:
       Type: 'AWS::DynamoDB::Table'
       DeletionPolicy: Delete
