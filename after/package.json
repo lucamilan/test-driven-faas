@@ -4,17 +4,21 @@
   "description": "Sample GraphQL api for managing keys and values",
   "main": "handler.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "deploy": "node_modules\\.bin\\sls deploy -s dev -v",
+    "logs": "node_modules\\.bin\\sls logs -s dev -f graphql -v",
+    "logs": "node_modules\\.bin\\sls info -s dev -v"
   },
   "author": "Luca Milan & Nicola Baldi",
   "license": "ISC",
   "dependencies": {
-    "graphql": "^0.11.7",
-    "serverless-dynamodb-local": "0.2.26",
-    "serverless-offline": "3.16.0"
+    "graphql": "0.11.7",
+    "graphql-tools": "2.7.2"
   },
   "devDependencies": {
     "aws-sdk-mock": "^1.7.0",
+    "serverless": "1.24.1",
+    "serverless-dynamodb-local": "0.2.26",
+    "serverless-offline": "3.16.0",
     "graphql-log": "^0.1.3",
     "mocha": "^4.0.1"
   }
