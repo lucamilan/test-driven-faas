@@ -16,6 +16,7 @@ module.exports = {
     },
 
     deployService(stage = 'integration') {
+        execSync(`npm i`, { cwd: workingDir, stdio: 'inherit' })
         execSync(`${slsExec} deploy -s ${stage}`, { cwd: workingDir, stdio: 'inherit' })
     },
 
