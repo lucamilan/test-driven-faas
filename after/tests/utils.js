@@ -24,6 +24,10 @@ module.exports = {
         execSync(`${slsExec} remove -s ${stage}`, {cwd: workingDir, stdio: 'inherit'})
     },
 
+    infoService(stage = 'integration') {
+        execSync(`${slsExec} info -s ${stage}`, {cwd: workingDir, stdio: 'inherit'})
+    },
+
     getFunctionLogs(stage = 'integration') {
         try {
             const logs = execSync(`${slsExec} logs -f graphql -s ${stage}`, {cwd: workingDir, stdio: 'inherit'})
