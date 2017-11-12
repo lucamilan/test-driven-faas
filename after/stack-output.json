@@ -1,6 +1,0 @@
-{
-  "GraphqlLambdaFunctionQualifiedArn": "arn:aws:lambda:eu-west-1:687528494169:function:graphql-vault-dev-graphql:3",
-  "ServiceEndpoint": "https://a3da1q1aw1.execute-api.eu-west-1.amazonaws.com/dev",
-  "DbTableName": "graphql-vault-dev",
-  "ServerlessDeploymentBucketName": "graphql-vault-dev-serverlessdeploymentbucket-189p8m5fakbtp"
-}
