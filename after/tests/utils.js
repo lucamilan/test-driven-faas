@@ -16,19 +16,23 @@ module.exports = {
     },
 
     deployService(stage = 'integration') {
-        execSync(`npm i`, { cwd: workingDir, stdio: 'inherit' })
-        execSync(`${slsExec} deploy -s ${stage}`, { cwd: workingDir, stdio: 'inherit' })
+        execSync(`npm i`, {cwd: workingDir, stdio: 'inherit'})
+        execSync(`${slsExec} deploy -s ${stage}`, {cwd: workingDir, stdio: 'inherit'})
     },
 
     removeService(stage = 'integration') {
-        execSync(`${slsExec} remove -s ${stage}`, { cwd: workingDir, stdio: 'inherit' })
+        execSync(`${slsExec} remove -s ${stage}`, {cwd: workingDir, stdio: 'inherit'})
     },
 
     getFunctionLogs(stage = 'integration') {
-        const logs = execSync(`${slsExec} logs -f graphql -s ${stage}`, { cwd: workingDir, stdio: 'inherit' })
-        if(!logs)return ''
-        const logsString = new Buffer(logs, 'base64').toString();
-        process.stdout.write(logsString);
-        return logsString;
+        try {
+            const logs = execSync(`${slsExec} logs -f graphql -s ${stage}`, {cwd: workingDir, stdio: 'inherit'})
+            const logsString = new Buffer(logs || '', 'base64').toString()
+            process.stdout.write(logsString)
+            return logsString
+        } catch (error) {
+            console.error(error)
+            return ''
+        }
     }
 }

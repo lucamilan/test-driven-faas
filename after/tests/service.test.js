@@ -3,7 +3,7 @@ const utils = require('./utils')
 const request = require('superagent')
 
 describe('deploy service', function () {
-    this.timeout(1200000)
+    this.timeout( 5 * 60 * 1000 )
 
     before(function () {
         utils.deployService()
@@ -24,6 +24,17 @@ describe('deploy service', function () {
             .end((err, res) => {
                 if (err) return done(err)
                 assert.equal(expected, res.body.data.value)
+                done()
+            })
+    })
+
+    it('getting an error', function (done) {
+        const expected = 1
+        request.get(utils.getServiceEndpoint())
+            .query({query: '{value}'})
+            .end((err, res) => {
+                if (err) return done(err)
+                assert.equal(expected,res.body.errors.length)
                 done()
             })
     })
