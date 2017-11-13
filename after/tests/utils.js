@@ -4,7 +4,7 @@ const fs = require('fs')
 const path = require('path')
 const execSync = require('child_process').execSync
 
-const slsExec = path.join(__dirname, '..', 'node_modules', 'serverless', 'bin', 'serverless');
+const slsExec = path.join(__dirname, '..', 'node_modules', '.bin', 'sls');
 const workingDir = path.join(__dirname, '..')
 
 module.exports = {
