@@ -12,7 +12,7 @@ module.exports = {
 
     getServiceEndpoint(stage = 'integration') {
         const data = JSON.parse(fs.readFileSync(path.join(__dirname, '..', '.serverless', `stack-output-${stage}.json`)).toString())
-        return `${data.ServiceEndpoint}/graphql`
+        return data.ServiceEndpoint
     },
 
     deployService(stage = 'integration') {
