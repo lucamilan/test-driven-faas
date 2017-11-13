@@ -11,11 +11,8 @@ describe('deploy service', function () {
     })
 
     after(function () {
-        utils.removeService(stage)
-    })
-
-    afterEach(function(){
         utils.getFunctionLogs(stage)
+        utils.removeService(stage)
     })
 
     it('retrieving value for a key', function (done) {
@@ -24,6 +21,7 @@ describe('deploy service', function () {
             .query({query: '{value(key:"FAKE-KEY")}'})
             .end((err, res) => {
                 if (err) return done(err)
+                assert.equal(200, res.statusCode)
                 assert.equal(expected, res.body.data.value)
                 done()
             })
@@ -35,6 +33,7 @@ describe('deploy service', function () {
             .query({query: '{value}'})
             .end((err, res) => {
                 if (err) return done(err)
+                assert.equal(200, res.statusCode)
                 assert.equal(expected,res.body.errors.length)
                 done()
             })
@@ -46,6 +45,7 @@ describe('deploy service', function () {
             .query({query: `mutation {value(key:"SET-KEY", value:"${expected}")}`})
             .end((err, res) => {
                 if (err) return done(err)
+                assert.equal(200, res.statusCode)
                 assert.equal(expected, res.body.data.value)
                 done()
             })
