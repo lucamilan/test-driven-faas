@@ -23,14 +23,11 @@ describe('deploy service', function () {
   })
 
   it('retrieving value for a key', function (done) {
-    graphql
-      .query({query: '{value(key:"FAKE-KEY")}'})
-      .expect('Content-Type', /json/)
-      .expect(200)
-      .expect(res => {
-        assert.equal('', res.body.data.value)
-      })
-      .end(done)
+    graphql.query({query: '{value(key:"FAKE-KEY")}'})
+           .expect('Content-Type', /json/)
+           .expect(200)
+           .expect(res => { assert.equal('', res.body.data.value) })
+           .end(done)
   })
 
   it('getting an error', function (done) {
