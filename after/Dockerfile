@@ -1,12 +1,12 @@
-FROM node
+FROM node:6.10.0
 
-RUN npm install -g serverless
-RUN npm install serverless-offline -g
-RUN npm install serverless-dynamodb-local -g
+COPY . /app
 
-COPY . /app/
 WORKDIR /app
 
-EXPOSE 3000
-EXPOSE 8000
+RUN npm install -g serverless && npm install
 
+EXPOSE 3001
+
+ENTRYPOINT ["serverless"]
+CMD ["offline", "--stage", "dkr", "--port", "3001", "--host", "0.0.0.0"]

@@ -3,15 +3,17 @@ service: graphql-vault
 custom:
   dbTable: ${self:service}-${self:provider.stage}
   output:
-    file: .serverless/stack-output-${opt:stage, 'dev'}.json
+    file: .serverless/stack-output-${self:provider.stage}.json
   dynamodb:
     start:
       port: 8000
       inMemory: true
       migrate: true
+  serverless-offline:
+    stage: "dkr"
+  configurationFile: ./config.${self:provider.stage}.json
 
 plugins:
-  - serverless-dynamodb-local
   - serverless-offline
   - serverless-stack-output
 
@@ -28,6 +30,8 @@ provider:
         - dynamodb:*
       Resource:
         - { "Fn::GetAtt": ["DbTable", "Arn" ] }
+  environment:
+    configuration: ${file(${self:custom.configurationFile})}
 
 functions:
   graphql:

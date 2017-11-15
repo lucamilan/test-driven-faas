@@ -1,0 +1,9 @@
+README.md
+node_modules
+offline
+run.sh
+Dockerfile
+.dockerignore
+.gitignore
+config.*.json
+!config.dkr.json
