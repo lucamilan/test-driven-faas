@@ -1,11 +1,8 @@
 FROM node:6.10.0
 
-COPY . /app
-
 WORKDIR /app
 
-RUN npm install -g serverless && \
-    npm install
+RUN npm install -g serverless
 
 EXPOSE 3001
 
