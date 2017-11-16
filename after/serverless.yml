@@ -9,12 +9,14 @@ custom:
       port: 8000
       inMemory: true
       migrate: true
+      host: dynamodblocal-1
   serverless-offline:
     stage: "dkr"
   configurationFile: ./config.${self:provider.stage}.json
 
 plugins:
   - serverless-offline
+  - serverless-dynamodb-local
   - serverless-stack-output
 
 provider:

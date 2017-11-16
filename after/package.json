@@ -24,6 +24,7 @@
     "mocha": "^4.0.1",
     "supertest": "3.0.0",
     "serverless-offline": "3.16.0",
-    "serverless-stack-output": "^0.2.0"
+    "serverless-stack-output": "^0.2.0",
+    "serverless-dynamodb-local": "^0.2.26"
   }
 }

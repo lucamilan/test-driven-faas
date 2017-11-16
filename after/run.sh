@@ -29,4 +29,5 @@ docker network create $NETWORK_NAME
 docker container run --network $NETWORK_NAME --name $DYNAMODB_CONTAINER_NAME -d -p 8000:8000 cnadiminti/dynamodb-local -sharedDb –inMemory
 
 docker container run --network $NETWORK_NAME --name $SLSOFFLINE_CONTAINER_NAME -d -p 3001:3001 $SLSOFFLINE_IMAGE_NAME
-#read-only would be useful
+
+docker exec -ti $SLSOFFLINE_CONTAINER_NAME bash -c 'serverless dynamodb migrate --stage dkr'

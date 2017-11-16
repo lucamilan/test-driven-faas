@@ -4,7 +4,8 @@ COPY . /app
 
 WORKDIR /app
 
-RUN npm install -g serverless && npm install
+RUN npm install -g serverless && \
+    npm install
 
 EXPOSE 3001
 
