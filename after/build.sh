@@ -121,5 +121,5 @@ if [ $REMOVE -ne 1 ]; then
 
   echo "running dynamodb migration script..."
   docker exec -ti $SLSOFFLINE_CONTAINER_NAME \
-              bash -c '/app/node_modules/serverless/bin/serverless dynamodb migrate --stage dkr'
+              bash -c '/app/node_modules/.bin/sls dynamodb migrate --stage dkr'
 fi
