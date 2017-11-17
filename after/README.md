@@ -21,9 +21,9 @@ sls invoke -f graphql --data '{ "queryStringParameters" : { "query" : "mutation 
 
 ```bat
 #via curl
-curl -G 'http://localhost:3000/graphql' --data-urlencode 'query={value(key:"Username")}'
+curl -G 'http://localhost:3001/graphql' --data-urlencode 'query={value(key:"Username")}'
 
-curl -G 'http://localhost:3000/graphql' --data-urlencode 'query=mutation {value(key:"Username", value: "Luca")}'
+curl -G 'http://localhost:3001/graphql' --data-urlencode 'query=mutation {value(key:"Username", value: "Luca")}'
 ```
 
 ```bat

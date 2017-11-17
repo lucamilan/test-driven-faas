@@ -1,0 +1,6 @@
+{
+  "region": "localhost",
+  "endpoint": "http://dynamodblocal-1:8000",
+  "accessKeyId": "MOCK_ACCESS_KEY_ID",
+  "secretAccessKey": "MOCK_SECRET_ACCESS_KEY"
+}

@@ -1,9 +1,6 @@
 'use strict'
 const AWS = require('aws-sdk')
-const options = process.env.IS_OFFLINE ? {
-  region: 'localhost',
-  endpoint: 'http://localhost:8000'
-} : { }
+const options = process.env.configuration
 
 const db = () => new AWS.DynamoDB.DocumentClient(options)
 
