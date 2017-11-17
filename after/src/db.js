@@ -1,7 +1,7 @@
 'use strict'
 const AWS = require('aws-sdk')
-const options = process.env.configuration
-
+const config = require('./config.json')
+const options = config[process.env.STAGE] || {}
 const db = () => new AWS.DynamoDB.DocumentClient(options)
 
 module.exports = {
