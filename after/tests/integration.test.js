@@ -14,7 +14,6 @@ describe('deploy service', function () {
   })
 
   after(function () {
-    utils.getFunctionLogs(stage)
     utils.removeService(stage)
   })
 

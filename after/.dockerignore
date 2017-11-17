@@ -5,5 +5,4 @@ run.sh
 Dockerfile
 .dockerignore
 .gitignore
-config.*.json
-!config.dkr.json
+config*.json

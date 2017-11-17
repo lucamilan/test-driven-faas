@@ -10,9 +10,6 @@ custom:
       inMemory: true
       migrate: true
       host: dynamodblocal-1
-  serverless-offline:
-    stage: "dkr"
-  configurationFile: ./config.${self:provider.stage}.json
 
 plugins:
   - serverless-offline
@@ -33,7 +30,7 @@ provider:
       Resource:
         - { "Fn::GetAtt": ["DbTable", "Arn" ] }
   environment:
-    configuration: ${file(${self:custom.configurationFile})}
+    STAGE: ${self:provider.stage}
 
 functions:
   graphql:
