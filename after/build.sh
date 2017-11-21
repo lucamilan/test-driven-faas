@@ -8,14 +8,14 @@ REBUILD=0
 REMOVE=0
 
 function printUsage {
-  echo "Usage:  ./build.sh [OPTIONS]
+  echo "Usage:  ./build.sh COMMAND
 
   Run docker scripts
 
-    Options:
-      rebuild           Remove and build all stuff from scratch
-      run               Run all containers
-      remove            Remove all stuff"
+    Commands:
+      rebuild                Remove and build all stuff from scratch
+      run                    Run all containers
+      remove                 Remove all stuff"
 }
 
 case $1 in
