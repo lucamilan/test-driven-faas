@@ -8,14 +8,14 @@ REBUILD=0
 REMOVE=0
 
 function printUsage {
-  echo "Usage:  ./build.sh [OPTIONS]
+  echo "Usage:  ./build.sh COMMAND
 
   Run docker scripts
 
-    Options:
-      rebuild           Remove and build all stuff from scratch
-      run               Run all containers
-      remove            Remove all stuff"
+    Commands:
+      rebuild                Remove and build all stuff from scratch
+      run                    Run all containers
+      remove                 Remove all stuff"
 }
 
 case $1 in
@@ -76,6 +76,14 @@ function createNetwork {
   fi
 }
 
+if [ $REMOVE -eq 1 ]; then
+  echo "removing local npm packages..."
+  npm uninstall `ls -1 node_modules | tr '/\n' ' '`
+else
+  echo "running npm install..."
+  npm install
+fi
+
 stopAndRemoveContainer $DYNAMODB_CONTAINER_NAME
 stopAndRemoveContainer $SLSOFFLINE_CONTAINER_NAME
 
@@ -103,9 +111,6 @@ if [ $REMOVE -ne 1 ]; then
                        -p 8000:8000 \
                        cnadiminti/dynamodb-local -sharedDb –inMemory
 
-  echo "running npm install..."
-  npm install
-
   echo "running contaner $SLSOFFLINE_CONTAINER_NAME..."
   docker container run --network $NETWORK_NAME \
                        --name $SLSOFFLINE_CONTAINER_NAME \
@@ -116,5 +121,5 @@ if [ $REMOVE -ne 1 ]; then
 
   echo "running dynamodb migration script..."
   docker exec -ti $SLSOFFLINE_CONTAINER_NAME \
-              bash -c 'serverless dynamodb migrate --stage dkr'
+              bash -c '/app/node_modules/.bin/sls dynamodb migrate --stage dkr'
 fi

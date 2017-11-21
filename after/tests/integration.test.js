@@ -1,48 +1,40 @@
 const assert = require('assert')
 const utils = require('./utils')
 const supertest = require('supertest')
-const stage = `T${(new Date().getTime() / 1000 | 0).toString()}`
 
-describe('deploy service', function () {
-  this.timeout(5 * 60 * 1000)
-  let request
-  let graphql
+describe('with graphql endpoint', function() {
+  this.timeout(5 * 1000)
+  const request = () => {
+    const endpoint = utils.getServiceEndpoint()
+    console.log(`ENDPOINT: ${endpoint}`)
+    return supertest(endpoint)
+  }
 
-  before(function () {
-    utils.deployService(stage)
-    request = supertest(utils.getServiceEndpoint(stage))
+  it('retrieving value for a key', done => {
+    request().get('/graphql')
+      .query({query: '{value(key:"FAKE-KEY")}'})
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .expect(res => { assert.equal('', res.body.data.value) })
+      .end(done)
   })
 
-  after(function () {
-    utils.removeService(stage)
+  it('getting an error', done => {
+    request().get('/graphql')
+      .query({query: '{value}'})
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .expect(res => { assert.equal(1, res.body.errors.length) })
+      .end(done)
   })
 
-  beforeEach(function(){
-    graphql = request.get('/graphql')
-  })
-
-  it('retrieving value for a key', function (done) {
-    graphql.query({query: '{value(key:"FAKE-KEY")}'})
-           .expect('Content-Type', /json/)
-           .expect(200)
-           .expect(res => { assert.equal('', res.body.data.value) })
-           .end(done)
-  })
-
-  it('getting an error', function (done) {
-    graphql.query({query: '{value}'})
-           .expect('Content-Type', /json/)
-           .expect(200)
-           .expect(res => { assert.equal(1, res.body.errors.length) })
-           .end(done)
-  })
-
-  it('writing value for a key', function (done) {
+  it('writing value for a key', done => {
     const expected = 'TEST'
-    graphql.query({query: `mutation {value(key:"SET-KEY", value:"${expected}")}`})
-           .expect('Content-Type', /json/)
-           .expect(200)
-           .expect(res => { assert.equal(expected, res.body.data.value) })
-           .end(done)
+    request().get('/graphql')
+      .query({query: `mutation {value(key:"SET-KEY", value:"${expected}")}`})
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .expect(res => { assert.equal(expected, res.body.data.value) })
+      .end(done)
   })
 })
