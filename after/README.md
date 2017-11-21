@@ -30,7 +30,7 @@ For further details, run `./build.sh --help`.
 
 ## Testing Offline
 
-With these kind of tests we run locally, so we can check components logic (Unit) and the integration between dynamodb and graphql lambda api both offline.
+These kind of tests run locally, so we can check components logic (Unit) and the integration between dynamodb and graphql lambda api both offline.
 
 ### 1 - Unit Tests
 
