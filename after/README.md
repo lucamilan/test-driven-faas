@@ -28,17 +28,23 @@ node_modules/.bin/sls invoke -f graphql --data '{ "queryStringParameters" : { "q
 Run `./build.sh rebuild` to build docker images and running all required containers.
 For further details, run `./build.sh --help`.
 
-## Testing
+## Testing Offline
 
-### Unit Tests
+With these kind of tests we run locally, so we can check components logic (Unit) and the integration between dynamodb and graphql lambda api both offline.
+
+### 1 - Unit Tests
 
 Run `./run_tests.sh unit`.
 
-### Integration Tests
-
-Run `./run_tests.sh integration --stage testingstage`.
-
-### Integration Tests against Docker
+### 2 - Integration Tests against Docker
 
 Run `./run_tests.sh docker`.
+
+## Testing Online (AWS)
+
+### 1 - Integration Tests
+
+These kind of tests run online in a isolated CF Stack, so we can verify user roles, policies and permissions and of course the integration between dynamodb and graphql lambda api both online.
+
+Run `./run_tests.sh integration --stage testingstage`.
 
