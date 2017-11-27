@@ -21,8 +21,6 @@ module.exports = {
     const stage = getArg('--stage')
     const endpoint = getArg('--endpoint')
 
-    console.log(`endpoint: ${endpoint}, stage: ${stage}`)
-
     if (typeof endpoint !== 'undefined') {
       return endpoint
     }
