@@ -5,7 +5,7 @@ module.exports = {
     }
   },
   Mutation: {
-    value(obj, { key, value }, context, info) {
+    set(obj, { key, value }, context, info) {
       return context.setValue(key, value)
     }
   }

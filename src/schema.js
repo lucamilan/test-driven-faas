@@ -5,5 +5,5 @@ module.exports = `type Query {
 }
 
 type Mutation {
-  value(key: String!, value: String!): String
+  set(key: String!, value: String!): String
 }`
