@@ -12,6 +12,6 @@ module.exports.graphql = (event, context, callback) => {
   graphql({schema, source, contextValue})
     .then(result => callback(null, {
       statusCode: 200,
-      body: JSON.stringify(result)
+      body: result
     }), error => callback(error))
 }

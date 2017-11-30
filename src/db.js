@@ -16,19 +16,20 @@ module.exports = (stage, tableName) => {
           if (error) {
             reject(error)
           } else {
-            resolve(typeof data.Item === 'undefined' ? '' : data.Item.info)
+            resolve(typeof data.Item === 'undefined' ? '' : data.Item.val)
           }
         })
       })
     },
-    setValue: (key, info) => {
+    setValue: (key, value) => {
       const params = {
         TableName: tableName,
         Key: { key: key },
-        UpdateExpression: 'SET info = :info',
+        UpdateExpression: 'SET val = :value',
         ExpressionAttributeValues: {
-          ':info': info
-        }
+          ':value': value
+        },
+        ReturnValues: 'ALL_NEW'
       }
 
       return new Promise((resolve, reject) => {
@@ -36,7 +37,7 @@ module.exports = (stage, tableName) => {
           if (error) {
             reject(error)
           } else {
-            resolve(info)
+            resolve(data.Attributes.val)
           }
         })
       })

@@ -17,7 +17,7 @@ describe('querying', () => {
     const expected = 'fake value'
     stubDocumentClientRead({
       Item: {
-        info: expected
+        val: expected
       }
     })
     const evt = {
@@ -26,7 +26,7 @@ describe('querying', () => {
       }
     }
     handler.graphql(evt, null, (error, result) => {
-      assert.equal(expected, JSON.parse(result.body).data.value)
+      assert.equal(expected, result.body.data.value)
       done()
     })
   })
@@ -40,7 +40,7 @@ describe('querying', () => {
       }
     }
     handler.graphql(evt, null, (error, result) => {
-      assert.equal(expected, JSON.parse(result.body).data.value)
+      assert.equal(expected, result.body.data.value)
       done()
     })
   })
@@ -52,7 +52,7 @@ describe('querying', () => {
       }
     }
     handler.graphql(evt, null, (error, result) => {
-      assert.equal(1, JSON.parse(result.body).errors.length)
+      assert.equal(1, result.body.errors.length)
       done()
     })
   })
@@ -65,14 +65,18 @@ describe('querying', () => {
 describe('mutating', () => {
   it('writing value for a key', done => {
     const expected = 'Mario'
-    stubDocumentClientWrite({ })
+    stubDocumentClientWrite({
+      Attributes: {
+        val: expected
+      }
+    })
     const evt = {
       queryStringParameters: {
         query: `mutation {set(key: "Username", value: "${expected}")}`
       }
     }
     handler.graphql(evt, null, (error, result) => {
-      assert.equal(expected, JSON.parse(result.body).data.set)
+      assert.equal(expected, result.body.data.set)
       done()
     })
   })
