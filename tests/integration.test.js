@@ -19,7 +19,7 @@ describe('with graphql endpoint', function() {
       .expect(200)
       .expect(r => {
         assert.equal(expected,
-          r.body.data.set,
+          prop('body', 'data', 'set')(r),
           JSON.stringify(prop('body', 'errors')(r))) })
   })
 
@@ -33,7 +33,7 @@ describe('with graphql endpoint', function() {
       .expect(200)
       .expect(r => {
         assert.equal(expected,
-          r.body.data.value,
+          prop('body', 'data', 'value')(r),
           JSON.stringify(prop('body', 'errors')(r)))
       })
   })
