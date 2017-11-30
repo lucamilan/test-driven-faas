@@ -2,6 +2,8 @@ const assert = require('assert')
 const utils = require('./utils')
 const supertest = require('supertest')
 
+const prop = (...arr) => obj => arr.reduce((acc, v) => acc && acc.hasOwnProperty(v) ? acc[v] : undefined, obj)
+
 describe('with graphql endpoint', function() {
   this.timeout(5 * 1000)
 
@@ -15,7 +17,10 @@ describe('with graphql endpoint', function() {
       .query({query: `mutation {set(key:"${key}", value:"${expected}")}`})
       .expect('Content-Type', /json/)
       .expect(200)
-      .expect(r => { assert.equal(expected, r.body.data.set) })
+      .expect(r => {
+        assert.equal(expected,
+          r.body.data.set,
+          JSON.stringify(prop('body', 'errors')(r))) })
   })
 
   it('reading a value', () => {
@@ -26,7 +31,11 @@ describe('with graphql endpoint', function() {
       .query({query: `{value(key:"${key}")}`})
       .expect('Content-Type', /json/)
       .expect(200)
-      .expect(r => { assert.equal(expected, r.body.data.value) })
+      .expect(r => {
+        assert.equal(expected,
+          r.body.data.value,
+          JSON.stringify(prop('body', 'errors')(r)))
+      })
   })
 
   it('getting an error', () => {
@@ -34,6 +43,10 @@ describe('with graphql endpoint', function() {
       .query({query: '{value}'})
       .expect('Content-Type', /json/)
       .expect(200)
-      .expect(r => { assert.equal(1, r.body.errors.length) })
+      .expect(r => {
+        assert.equal(1,
+          prop('body', 'errors', 'length')(r),
+          JSON.stringify(prop('body', 'errors')(r)))
+      })
   })
 })
