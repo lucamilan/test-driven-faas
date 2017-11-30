@@ -10,8 +10,14 @@ module.exports.graphql = (event, context, callback) => {
   const contextValue = db
   const schema = makeExecutableSchema({typeDefs, resolvers})
   graphql({schema, source, contextValue})
-    .then(result => callback(null, {
-      statusCode: 200,
-      body: result
-    }), error => callback(error))
+    .then(result => {
+      callback(null, {
+        statusCode: 200,
+        body: JSON.stringify(result)
+      })
+    })
+    .catch(error => {
+      console.error(JSON.stringify(error))
+      callback(error)
+    })
 }

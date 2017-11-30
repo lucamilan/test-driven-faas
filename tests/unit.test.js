@@ -26,7 +26,7 @@ describe('querying', () => {
       }
     }
     handler.graphql(evt, null, (error, result) => {
-      assert.equal(expected, result.body.data.value)
+      assert.equal(expected, JSON.parse(result.body).data.value)
       done()
     })
   })
@@ -40,7 +40,7 @@ describe('querying', () => {
       }
     }
     handler.graphql(evt, null, (error, result) => {
-      assert.equal(expected, result.body.data.value)
+      assert.equal(expected, JSON.parse(result.body).data.value)
       done()
     })
   })
@@ -52,7 +52,7 @@ describe('querying', () => {
       }
     }
     handler.graphql(evt, null, (error, result) => {
-      assert.equal(1, result.body.errors.length)
+      assert.equal(1, JSON.parse(result.body).errors.length)
       done()
     })
   })
@@ -76,7 +76,7 @@ describe('mutating', () => {
       }
     }
     handler.graphql(evt, null, (error, result) => {
-      assert.equal(expected, result.body.data.set)
+      assert.equal(expected, JSON.parse(result.body).data.set)
       done()
     })
   })

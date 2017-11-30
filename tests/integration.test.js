@@ -5,7 +5,7 @@ const supertest = require('supertest')
 const prop = (...arr) => obj => arr.reduce((acc, v) => acc && acc.hasOwnProperty(v) ? acc[v] : undefined, obj)
 
 describe('with graphql endpoint', function() {
-  this.timeout(5 * 1000)
+  this.timeout(30 * 1000)
 
   const request = () => supertest(utils.getServiceEndpoint())
 
